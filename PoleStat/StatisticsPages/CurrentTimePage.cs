@@ -8,7 +8,7 @@ namespace PoleStat.StatisticsPages
 		{
 			const string top = "The current time is";
 
-			string bottom = DateTime.Now.TimeOfDay.ToString();
+			string bottom = DateTime.Now.ToShortTimeString();
 
 			return new DisplayMessage(top, bottom);
 		}
