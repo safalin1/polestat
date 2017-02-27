@@ -9,6 +9,15 @@ namespace PoleStat
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool GetPerformanceInfo([Out] out PerformanceInformation PerformanceInformation, [In] int Size);
 
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr GetShellWindow();
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr GetDesktopWindow();
+
 		[StructLayout(LayoutKind.Sequential)]
 		public struct PerformanceInformation
 		{

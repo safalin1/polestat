@@ -1,6 +1,8 @@
 ﻿using System.Configuration;
 using System.Threading.Tasks;
+using PoleStat.HardwareMonitor;
 using PoleStat.StatisticsPages;
+using PoleStat.UI;
 
 namespace PoleStat
 {
@@ -19,14 +21,39 @@ namespace PoleStat
 		{
 			IStatisticsPage[] pages = GetPages();
 
+			MainWindow.Instance.UpdateStatisticPages(pages);
+
 			while (true)
 			{
+				if (ComputerSessionMonitor.IsLocked)
+				{
+					await Task.Delay(3000);
+					continue;
+				}
+
 				foreach (IStatisticsPage page in pages)
 				{
+					MainWindow.Instance.SetActivePage(page);
+
+					if (ComputerSessionMonitor.IsLocked)
+					{
+						break;
+					}
+
 					int drawCount = 0;
 
-					while (drawCount < 5)
+					while (drawCount < _rotationDrawCount)
 					{
+						if (ComputerSessionMonitor.IsLocked)
+						{
+							break;
+						}
+
+						if (page is GpuTemperaturePage || page is GpuFanSpeedPage)
+						{
+							TemperatureProvider.Poll();
+						}
+
 						DisplayManager.SendMessage(page.GetMessage());
 
 						await Task.Delay(_updateTimeMilliseconds);
@@ -40,11 +67,16 @@ namespace PoleStat
 		{
 			return new IStatisticsPage[]
 			{
-				new ComputerDetails(),
+				new ComputerDetailsInternal(),
+				new ComputerDetailsExternal(),
 				new CurrentDatePage(),
 				new CurrentTimePage(),
 				new CpuUsagePage(),
 				new MemoryUsagePage(),
+				new GpuNamePage(), 
+				new GpuRamPage(), 
+				new GpuTemperaturePage(),
+				new GpuFanSpeedPage(), 
 				new NetworkDownloadUsagePage(),
 				new NetworkUploadUsagePage(),
 			};

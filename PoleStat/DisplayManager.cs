@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.IO.Ports;
+using PoleStat.UI;
 
 namespace PoleStat
 {
@@ -9,6 +10,7 @@ namespace PoleStat
 		private static readonly byte[] _clearBuffer = { 27, 64 };
 		private static readonly byte[] _origBuffer = { 27, 116, 0 };
 
+		private static readonly object _door = new object();
 		private static readonly SerialPort _serialPort = new SerialPort();
 
 		public static void Initialise()
@@ -19,9 +21,12 @@ namespace PoleStat
 
 		public static void Clear()
 		{
-			_serialPort.Open();
-			_serialPort.Write(_clearBuffer, 0, 2);
-			_serialPort.Close();
+			lock (_door)
+			{
+				_serialPort.Open();
+				_serialPort.Write(_clearBuffer, 0, 2);
+				_serialPort.Close();
+			}
 		}
 
 		public static void SendMessage(DisplayMessage message)
@@ -44,11 +49,17 @@ namespace PoleStat
 				throw new ArgumentException("Bottom line is too long.", nameof(bottomLine));
 			}
 
-			_serialPort.Open();
-			//_serialPort.Write(_clearBuffer, 0, 2);
-			_serialPort.Write(_origBuffer, 0, 3);
-			_serialPort.Write(topLine + bottomLine);
-			_serialPort.Close();
+			lock (_door)
+			{
+				_serialPort.Open();
+				//_serialPort.Write(_clearBuffer, 0, 2);
+				_serialPort.Write(_origBuffer, 0, 3);
+
+				_serialPort.Write(topLine + bottomLine);
+				_serialPort.Close();
+			}
+
+			MainWindow.Instance.ActiveDisplayMessage = message;
 		}
 	}
 }

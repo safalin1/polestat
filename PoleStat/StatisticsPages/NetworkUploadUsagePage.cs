@@ -22,5 +22,10 @@ namespace PoleStat.StatisticsPages
 
 			return new DisplayMessage(top, bottom);
 		}
+
+		public override string ToString()
+		{
+			return "Network Upload Usage";
+		}
 	}
 }

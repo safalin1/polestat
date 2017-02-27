@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace PoleStat.StatisticsPages
+﻿namespace PoleStat.StatisticsPages
 {
 	internal class MemoryUsagePage : IStatisticsPage
 	{
@@ -16,6 +14,11 @@ namespace PoleStat.StatisticsPages
 			string bottom = $"{percentOccupied:0}%";
 
 			return new DisplayMessage(top, bottom);
+		}
+
+		public override string ToString()
+		{
+			return "RAM Usage";
 		}
 	}
 }

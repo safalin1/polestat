@@ -13,13 +13,18 @@ namespace PoleStat.StatisticsPages
 
 		public DisplayMessage GetMessage()
 		{
-			const string top = "CPU";
+			const string top = "CPU Usage";
 
 			float v = _counter.NextValue();
 
 			string bottom = $"{v:0}%";
 
 			return new DisplayMessage(top, bottom);
+		}
+
+		public override string ToString()
+		{
+			return "CPU Usage";
 		}
 	}
 }

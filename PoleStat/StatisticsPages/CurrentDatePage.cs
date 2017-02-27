@@ -8,9 +8,14 @@ namespace PoleStat.StatisticsPages
 		{
 			const string top = "Today's date is";
 
-			string bottom = DateTime.Now.Date.ToShortDateString();
+			string bottom = DateTime.Now.Date.ToLongDateString();
 
 			return new DisplayMessage(top, bottom);
+		}
+
+		public override string ToString()
+		{
+			return "Current Date";
 		}
 	}
 }

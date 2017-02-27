@@ -1,4 +1,7 @@
 ![POLESTAT](logo.png "PoleStat")
-Little app to display computer statistics on HP Pole Displays/VFDs.
+
+A little app to display computer statistics on HP Pole Displays/VFDs.
 
 ![alt text](inaction.jpg "inaction")
+
+Uses OpenHardwareMonitorLib for GPU temperature polling, and icanhazip.com for retrieving public IP address.
