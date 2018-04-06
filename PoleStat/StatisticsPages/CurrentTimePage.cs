@@ -6,9 +6,9 @@ namespace PoleStat.StatisticsPages
 	{
 		public DisplayMessage GetMessage()
 		{
-			const string top = "The current time is";
+			const string top = "TIME:";
 
-			string bottom = DateTime.Now.ToShortTimeString();
+			string bottom = $"{DateTime.Now:h:mm:ss tt}";
 
 			return new DisplayMessage(top, bottom);
 		}

@@ -7,7 +7,7 @@
 			base.GetMessage();
 
 			return new DisplayMessage(
-				topLine: "Graphics Card",
+				topLine: "Installed GPU",
 				bottomLine: GetGpuName());
 		}
 

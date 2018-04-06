@@ -9,7 +9,7 @@ namespace PoleStat.StatisticsPages
 			base.GetMessage();
 
 			return new DisplayMessage(
-				topLine: GetGpuName(),
+				topLine: "GPU Temperature",
 				bottomLine: $"{TemperatureProvider.GpuTemperature}c");
 		}
 

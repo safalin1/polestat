@@ -1,23 +1,19 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 
 namespace PoleStat.StatisticsPages
 {
-	internal class ComputerDetailsInternal : IStatisticsPage
+	internal class ComputerStatePage : IStatisticsPage
 	{
-		private readonly string _localAddress;
-
-		public ComputerDetailsInternal()
-		{
-			_localAddress = GetLocalIpAddress().ToString();
-		}
-
 		public DisplayMessage GetMessage()
 		{
 			return new DisplayMessage(
-				topLine: "Internal Network IP",
-				bottomLine: _localAddress);
+				topLine: Environment.MachineName,
+				bottomLine: ComputerSessionMonitor.IsLocked
+					? "Locked."
+					: $"{Environment.UserName} is logged in.");
 		}
 
 		public override string ToString()

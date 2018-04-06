@@ -1,17 +1,21 @@
-﻿namespace PoleStat.StatisticsPages
+﻿using ByteSizeLib;
+using Microsoft.VisualBasic.Devices;
+
+namespace PoleStat.StatisticsPages
 {
 	internal class MemoryUsagePage : IStatisticsPage
 	{
 		public DisplayMessage GetMessage()
 		{
-			const string top = "RAM";
+			var computerInfo = new ComputerInfo();
 
-			long phav = NativeMethods.GetPhysicalAvailableMemoryInMiB();
-			long tot = NativeMethods.GetTotalMemoryInMiB();
-			decimal percentFree = ((decimal)phav / (decimal)tot) * 100;
+			var phav = ByteSize.FromBytes(computerInfo.TotalPhysicalMemory - computerInfo.AvailablePhysicalMemory);
+			var tot = ByteSize.FromBytes(computerInfo.TotalPhysicalMemory);
+
+			decimal percentFree = (decimal)(phav.Bytes * 100.0 /tot.Bytes);
 			decimal percentOccupied = 100 - percentFree;
-
-			string bottom = $"{percentOccupied:0}%";
+			string top = $"RAM: {percentOccupied:0}%";
+			string bottom = $"{phav.ToString("#.#")}/{tot.ToString("#.#")}";
 
 			return new DisplayMessage(top, bottom);
 		}

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 
 namespace PoleStat
 {
@@ -17,12 +16,10 @@ namespace PoleStat
 			if (e.Reason == SessionSwitchReason.SessionLock)
 			{
 				IsLocked = true;
-				DisplayManager.Clear();
 			}
 			else if (e.Reason == SessionSwitchReason.SessionUnlock)
 			{
 				IsLocked = false;
-				DisplayManager.SendMessage(new DisplayMessage("WELCOME BACK", Environment.UserName));
 			}
 		}
 	}

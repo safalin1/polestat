@@ -9,7 +9,7 @@ namespace PoleStat.StatisticsPages
 			base.GetMessage();
 
 			return new DisplayMessage(
-				topLine: GetGpuName(),
+				topLine: "GPU Fan Speed",
 				bottomLine: $"{TemperatureProvider.GpuFanSpeed}RPM");
 		}
 

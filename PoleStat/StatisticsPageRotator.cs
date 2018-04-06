@@ -44,11 +44,6 @@ namespace PoleStat
 
 					while (drawCount < _rotationDrawCount)
 					{
-						if (ComputerSessionMonitor.IsLocked)
-						{
-							break;
-						}
-
 						if (page is GpuTemperaturePage || page is GpuFanSpeedPage)
 						{
 							TemperatureProvider.Poll();
@@ -67,6 +62,7 @@ namespace PoleStat
 		{
 			return new IStatisticsPage[]
 			{
+				new ComputerStatePage(), 
 				new ComputerDetailsInternal(),
 				new ComputerDetailsExternal(),
 				new CurrentDatePage(),

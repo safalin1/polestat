@@ -6,9 +6,9 @@ namespace PoleStat.StatisticsPages
 	{
 		public DisplayMessage GetMessage()
 		{
-			const string top = "Today's date is";
+			const string top = "DATE:";
 
-			string bottom = DateTime.Now.Date.ToLongDateString();
+			string bottom = $"{DateTime.Now:D}";
 
 			return new DisplayMessage(top, bottom);
 		}
